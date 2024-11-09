@@ -85,6 +85,7 @@ void addPointer(void **new_pointer, void *existing_memory) {
 // Función para desvincular un puntero de la entrada de memoria correspondiente
 void unregisterPointer(void **pointer) {
   fprintf(stderr, "\n\nMemoria a eliminar %p\n", pointer);
+  int b = 0;
   MemoryEntry *current = memoryList;
   while (current) {
     PointerNode *prev = NULL;
@@ -93,6 +94,8 @@ void unregisterPointer(void **pointer) {
     while (ptr) {
       fprintf(stderr, "   %p\n", ptr->pointer);
       if (ptr->pointer == pointer) {
+        b = 1;
+        printf("[DEBUG] desvinculando puntero %p\n", *pointer);
         if (prev)
           prev->next = ptr->next;
         else
@@ -104,6 +107,9 @@ void unregisterPointer(void **pointer) {
       ptr = ptr->next;
     }
     current = current->next;
+  }
+  if (!b) {
+    printf("puntero no encontrado %p\n", *pointer);
   }
   fprintf(stderr, "\n\n");
 }
