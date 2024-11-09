@@ -124,6 +124,9 @@ void garbageCollector() {
       currentEntry = currentEntry->next;
     } else {
       // Sin referencias activas, liberar memoria
+      fprintf(stderr,
+              "[DEBUG] liberando memoria  %p sin referencias activas.\n",
+              currentEntry->memory);
       free(currentEntry->memory);
       if (prevEntry)
         prevEntry->next = currentEntry->next;
