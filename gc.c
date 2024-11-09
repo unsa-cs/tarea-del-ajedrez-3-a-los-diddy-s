@@ -38,6 +38,21 @@ MemoryEntry *createMemoryEntry(void *memory) {
   return entry;
 }
 
+void printMemoryList() {
+  printf("contenido de memoryList:\n");
+  MemoryEntry *currentEntry = memoryList;
+  while (currentEntry) {
+    printf("  - memoria: %p\n", currentEntry->memory);
+    PointerNode *currentPointer = currentEntry->pointers;
+    while (currentPointer) {
+      printf("    - puntero registrado: %p\n", *(currentPointer->pointer));
+      currentPointer = currentPointer->next;
+    }
+    currentEntry = currentEntry->next;
+  }
+  printf("--------------------------\n");
+}
+
 // Función para asignar memoria y registrar la entrada en el diccionario
 void memoryAlloc(void **pointer, size_t size) {
   *pointer = malloc(size);
@@ -123,15 +138,4 @@ int countMemoryEntries() {
   fprintf(stderr, "[DEBUG] memory with references: %d\n", count);
 
   return count;
-}
-// funcion para imprimir una entrada completa
-void printMemoryList() {
-  printf("contenido de memoryList:\n");
-  MemoryEntry *currentEntry = memoryList;
-  while (currentEntry) {
-    printf("- memoria: %p\n", currentEntry->memory);
-    currentEntry = currentEntry->next;
-  }
-
-  printf("----------------------------------\n");
 }
