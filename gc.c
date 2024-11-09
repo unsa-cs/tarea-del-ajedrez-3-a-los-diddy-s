@@ -84,11 +84,14 @@ void addPointer(void **new_pointer, void *existing_memory) {
 
 // Función para desvincular un puntero de la entrada de memoria correspondiente
 void unregisterPointer(void **pointer) {
+  fprintf(stderr, "\n\nMemoria a eliminar %p\n", pointer);
   MemoryEntry *current = memoryList;
   while (current) {
     PointerNode *prev = NULL;
     PointerNode *ptr = current->pointers;
+    fprintf(stderr, "Comparaciones:\n");
     while (ptr) {
+      fprintf(stderr, "   %p\n", ptr->pointer);
       if (ptr->pointer == pointer) {
         if (prev)
           prev->next = ptr->next;
@@ -102,6 +105,7 @@ void unregisterPointer(void **pointer) {
     }
     current = current->next;
   }
+  fprintf(stderr, "\n\n");
 }
 
 // Función de recolección de basura que libera memoria sin referencias activas
