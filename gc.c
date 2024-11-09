@@ -49,6 +49,7 @@ void memoryAlloc(void **pointer, size_t size) {
   entry->pointers = createPointerNode(pointer);
   entry->next = memoryList;
   memoryList = entry;
+  printMemoryList();
 }
 
 // Función para agregar un puntero adicional que apunte a la misma memoria
@@ -122,4 +123,15 @@ int countMemoryEntries() {
   fprintf(stderr, "[DEBUG] memory with references: %d\n", count);
 
   return count;
+}
+// funcion para imprimir una entrada completa
+void printMemoryList() {
+  printf("contenido de memoryList:\n");
+  MemoryEntry *currentEntry = memoryList;
+  while (currentEntry) {
+    printf("- memoria: %p\n", currentEntry->memory);
+    currentEntry = currentEntry->next;
+  }
+
+  printf("----------------------------------\n");
 }
