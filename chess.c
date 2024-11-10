@@ -1,6 +1,6 @@
-// #include <stdio.h>
 #include "chess.h"
 #include "gc.h"
+#include <stdio.h>
 #include <stdlib.h>
 
 char **allocateMemory(int rows, size_t cols) {
@@ -38,6 +38,7 @@ char **reverse(char **fig) {
   }
   newFig[rows] = 0;
   unlinkMemory(newFig);
+  fprintf(stderr, "[DEBUG] figura copiada en %p.\n", newFig);
   return newFig;
 }
 
@@ -45,6 +46,5 @@ char **flipV(char **fig) {
   fig = allocateMemory(1, 0);
 
   unlinkMemory(fig);
-
   return fig;
 }
