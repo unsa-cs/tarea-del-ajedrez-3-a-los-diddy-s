@@ -42,7 +42,7 @@ char **reverse(char **fig) {
 }
 
 char **flipV(char **fig) {
-  fig = allocateMemory(1, 1);
+  fig = allocateMemory(1, 0);
 
   unlinkMemory(fig);
 
