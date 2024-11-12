@@ -3,13 +3,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-char **allocateMemory(int rows, size_t cols) {
-  char **newFig;
-  memoryAlloc((void **)&newFig, sizeof(char *) * (rows + 1));
-  fprintf(stderr, "Direccion de memoria del puntero newFig: %p\n", &newFig);
+void allocateMemory(int rows, size_t cols, char ***newFig) {
+  memoryAlloc((void **)newFig, sizeof(char *) * (rows + 1));
+  fprintf(stderr, "Direccion de memoria de newFig: %p\n", newFig);
   for (int i = 0; i < rows; i++)
-    memoryAlloc((void **)&newFig[i], sizeof(char) * (cols + 1));
-  return newFig;
+    memoryAlloc((void **)&(*newFig)[i], sizeof(char) * (cols + 1));
 }
 
 void unlinkMemory(char **fig) {
@@ -30,7 +28,8 @@ char **reverse(char **fig) {
   while (fig[0][++cols])
     ;
 
-  char **newFig = allocateMemory(rows, cols);
+  char **newFig;
+  allocateMemory(rows, cols, &newFig);
 
   for (int i = 0; fig[i]; i++) {
     for (int j = 0; fig[0][j]; j++)
@@ -45,8 +44,7 @@ char **reverse(char **fig) {
 
 char **flipV(char **fig) {
   fprintf(stderr, "Direccion de memoria fig original: %p\n", &fig);
-  fig = allocateMemory(1, 0);
-
+  allocateMemory(1, 0, &fig);
   unlinkMemory(fig);
   return fig;
 }
