@@ -6,6 +6,7 @@
 char **allocateMemory(int rows, size_t cols) {
   char **newFig;
   memoryAlloc((void **)&newFig, sizeof(char *) * (rows + 1));
+  fprintf(stderr, "Puntero del allocate Memory: %p\n", newFig);
   for (int i = 0; i < rows; i++)
     memoryAlloc((void **)&newFig[i], sizeof(char) * (cols + 1));
   return newFig;
