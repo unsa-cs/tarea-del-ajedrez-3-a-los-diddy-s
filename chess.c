@@ -16,7 +16,6 @@ void unlinkMemory(char **fig) {
   for (int i = 0; fig[i]; i++)
     unregisterPointer((void **)&fig[i]);
   countMemoryEntries();
-  fprintf(stderr, "\n------\nFig: %p\n&Fig: %p\n------\n", fig, &fig);
   unregisterPointer((void **)&fig);
   countMemoryEntries();
 }
@@ -44,6 +43,7 @@ char **reverse(char **fig) {
 }
 
 char **flipV(char **fig) {
+  fprintf(stderr, "Direccion de memoria fig original: %p\n", &fig);
   fig = allocateMemory(1, 0);
 
   unlinkMemory(fig);

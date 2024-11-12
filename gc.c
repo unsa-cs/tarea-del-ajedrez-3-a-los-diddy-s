@@ -60,6 +60,7 @@ void memoryAlloc(void **pointer, size_t size) {
     fprintf(stderr, "Error al asignar memoria\n");
     return;
   }
+  fprintf(stderr, "Puntero guardado: %p\n", pointer);
   MemoryEntry *entry = createMemoryEntry(*pointer);
   entry->pointers = createPointerNode(pointer);
   entry->next = memoryList;
