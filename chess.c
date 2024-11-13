@@ -32,15 +32,30 @@ char **reverse(char **fig) {
 
   char **newFig;
   allocateMemory(rows, cols, &newFig);
-
-  for (int i = 0; fig[i]; i++) {
-    for (int j = 0; fig[0][j]; j++)
-      newFig[i][j] = fig[i][j];
-    newFig[i][cols] = 0;
+  for (int i = 0; fig[i] != NULL; i++) {
+    for (int j = 0; fig[i][j] != '\0'; j++) {
+      switch (fig[i][j]) {
+      case '.':
+        newFig[i][j] = '@';
+        break;
+      case '_':
+        newFig[i][j] = '=';
+        break;
+      case '=':
+        newFig[i][j] = '_';
+        break;
+      case '@':
+        newFig[i][j] = '.';
+        break;
+      default:
+        newFig[i][j] = fig[i][j];
+      }
+    }
+    newFig[i][cols] = '\0';
   }
-  newFig[rows] = 0;
-  unlinkMemory(&newFig);
+  newFig[rows] = NULL;
   fprintf(stderr, "[DEBUG] figura copiada en %p.\n", newFig);
+  unlinkMemory(&newFig);
   return newFig;
 }
 

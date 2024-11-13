@@ -3,7 +3,7 @@
 #include "gc.h"
 
 void display() {
-  char **blackSquare = flipV(whiteSquare);
-  interpreter(blackSquare);
+  char **blackKnight = reverse(knight);
+  interpreter(blackKnight);
   garbageCollector();
 }
