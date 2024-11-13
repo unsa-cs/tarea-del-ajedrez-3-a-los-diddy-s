@@ -11,6 +11,7 @@ void allocateMemory(int rows, size_t cols, char ***newFig) {
 }
 
 void unlinkMemory(char **fig) {
+  fprintf(stderr, "Direccion de memoria de puntero a desvincular: %p\n", &fig);
   countMemoryEntries();
   for (int i = 0; fig[i]; i++)
     unregisterPointer((void **)&fig[i]);
