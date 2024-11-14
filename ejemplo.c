@@ -3,7 +3,8 @@
 #include "gc.h"
 
 void display() {
-  char **blackKnight = reverse(knight);
-  interpreter(blackKnight);
+  char **blackblock = reverse(whiteSquare);
+  char **join_square = join(blackblock, whiteSquare);
+  interpreter(join_square);
   garbageCollector();
 }

@@ -59,6 +59,38 @@ char **reverse(char **fig) {
   return newFig;
 }
 
+char **join(char **fig1, char **fig2) {
+  int rows = 0;
+  while (fig1[rows]) {
+    rows++;
+  }
+
+  int cols1 = 0;
+  while (fig1[0][cols1]) {
+    cols1++;
+  }
+
+  int cols2 = 0;
+  while (fig2[0][cols2]) {
+    cols2++;
+  }
+
+  char **newFig;
+  allocateMemory(rows, cols1 + cols2, &newFig);
+  for (int i = 0; i < rows; i++) {
+    for (int j = 0; j < cols1; j++) {
+      newFig[i][j] = fig1[i][j];
+    }
+    for (int j = 0; j < cols2; j++) {
+      newFig[i][j + cols1] = fig2[i][j];
+    }
+    newFig[i][cols1 + cols2] = '\0';
+  }
+  newFig[rows] = NULL;
+  unlinkMemory(&newFig);
+  return newFig;
+}
+
 char **flipV(char **fig) {
   fprintf(stderr, "Direccion de memoria fig original: %p\n", &fig);
   allocateMemory(1, 0, &fig);
