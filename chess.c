@@ -2,6 +2,7 @@
 #include "gc.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 void allocateMemory(int rows, size_t cols, char ***newFig) {
   memoryAlloc((void **)newFig, sizeof(char *) * (rows + 1));
@@ -20,14 +21,27 @@ void unlinkMemory(char ***ptrFig) {
   countMemoryEntries();
 }
 
-char **reverse(char **fig) {
-  int rows = 0;
-  while (fig[++rows])
-    ;
+int size_f(char **fig) {
+  int i = 0;
+  while (fig[i] != NULL) {
+    i++;
+  }
+  return i;
+}
 
-  int cols = 0;
-  while (fig[0][++cols])
-    ;
+int size_c(char **fig) {
+  int i = 0;
+  while (fig[0][i] != '\0') {
+    i++;
+  }
+  return i;
+}
+
+char **reverse(char **fig) {
+  int rows, cols;
+
+  rows = size_f(fig);
+  cols = size_c(fig);
 
   char **newFig;
   allocateMemory(rows, cols, &newFig);
@@ -58,20 +72,11 @@ char **reverse(char **fig) {
 }
 
 char **join(char **fig1, char **fig2) {
-  int rows = 0;
-  while (fig1[rows]) {
-    rows++;
-  }
 
-  int cols1 = 0;
-  while (fig1[0][cols1]) {
-    cols1++;
-  }
+  int rows = size_f(fig1);
 
-  int cols2 = 0;
-  while (fig2[0][cols2]) {
-    cols2++;
-  }
+  int cols1 = size_c(fig1);
+  int cols2 = size_c(fig2);
 
   char **newFig;
   allocateMemory(rows, cols1 + cols2, &newFig);
@@ -86,6 +91,7 @@ char **join(char **fig1, char **fig2) {
   }
   newFig[rows] = NULL;
   unlinkMemory(&newFig);
+  ;
   return newFig;
 }
 
