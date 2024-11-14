@@ -5,14 +5,13 @@
 
 void allocateMemory(int rows, size_t cols, char ***newFig) {
   memoryAlloc((void **)newFig, sizeof(char *) * (rows + 1));
-  fprintf(stderr, "Direccion de memoria de newFig: %p\n", newFig);
   for (int i = 0; i < rows; i++)
     memoryAlloc((void **)&(*newFig)[i], sizeof(char) * (cols + 1));
 }
 
 void unlinkMemory(char ***ptrFig) {
-  fprintf(stderr, "Direccion de memoria de puntero a desvincular: %p\n",
-          &ptrFig);
+  // fprintf(stderr, "Direccion de memoria de puntero a desvincular: %p\n",
+  //         &ptrFig);
   countMemoryEntries();
   for (int i = 0; (*ptrFig)[i]; i++)
     unregisterPointer((void **)&(*ptrFig)[i]);
@@ -54,7 +53,6 @@ char **reverse(char **fig) {
     newFig[i][cols] = '\0';
   }
   newFig[rows] = NULL;
-  fprintf(stderr, "[DEBUG] figura copiada en %p.\n", newFig);
   unlinkMemory(&newFig);
   return newFig;
 }
@@ -92,7 +90,6 @@ char **join(char **fig1, char **fig2) {
 }
 
 char **flipV(char **fig) {
-  fprintf(stderr, "Direccion de memoria fig original: %p\n", &fig);
   allocateMemory(1, 0, &fig);
   unlinkMemory(&fig);
   return fig;

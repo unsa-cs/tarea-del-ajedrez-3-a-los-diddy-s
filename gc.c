@@ -39,18 +39,14 @@ MemoryEntry *createMemoryEntry(void *memory) {
 }
 
 void printMemoryList() {
-  printf("contenido de memoryList:\n");
   MemoryEntry *currentEntry = memoryList;
   while (currentEntry) {
-    printf("  - memoria: %p\n", currentEntry->memory);
     PointerNode *currentPointer = currentEntry->pointers;
     while (currentPointer) {
-      printf("    - puntero registrado: %p\n", *(currentPointer->pointer));
       currentPointer = currentPointer->next;
     }
     currentEntry = currentEntry->next;
   }
-  printf("--------------------------\n");
 }
 
 // Función para asignar memoria y registrar la entrada en el diccionario
@@ -60,7 +56,7 @@ void memoryAlloc(void **pointer, size_t size) {
     fprintf(stderr, "Error al asignar memoria\n");
     return;
   }
-  fprintf(stderr, "Puntero guardado: %p\n", pointer);
+  // fprintf(stderr, "Puntero guardado: %p\n", pointer);
   MemoryEntry *entry = createMemoryEntry(*pointer);
   entry->pointers = createPointerNode(pointer);
   entry->next = memoryList;
@@ -85,18 +81,14 @@ void addPointer(void **new_pointer, void *existing_memory) {
 
 // Función para desvincular un puntero de la entrada de memoria correspondiente
 void unregisterPointer(void **pointer) {
-  fprintf(stderr, "\n\nMemoria a eliminar %p\n", pointer);
   int b = 0;
   MemoryEntry *current = memoryList;
   while (current) {
     PointerNode *prev = NULL;
     PointerNode *ptr = current->pointers;
-    fprintf(stderr, "Comparaciones:\n");
     while (ptr) {
-      fprintf(stderr, "   %p\n", ptr->pointer);
       if (ptr->pointer == pointer) {
         b = 1;
-        printf("[DEBUG] desvinculando puntero %p\n", *pointer);
         if (prev)
           prev->next = ptr->next;
         else
@@ -110,9 +102,8 @@ void unregisterPointer(void **pointer) {
     current = current->next;
   }
   if (!b) {
-    printf("puntero no encontrado %p\n", *pointer);
+    fprintf(stderr, "\n\nPuntero no encontrado %p\n\n", *pointer);
   }
-  fprintf(stderr, "\n\n");
 }
 
 // Función de recolección de basura que libera memoria sin referencias activas
@@ -125,9 +116,6 @@ void garbageCollector() {
       currentEntry = currentEntry->next;
     } else {
       // Sin referencias activas, liberar memoria
-      fprintf(stderr,
-              "[DEBUG] liberando memoria  %p sin referencias activas.\n",
-              currentEntry->memory);
       free(currentEntry->memory);
       if (prevEntry)
         prevEntry->next = currentEntry->next;
